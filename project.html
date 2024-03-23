@@ -33,7 +33,10 @@
             </div>
         </main>
         <footer class="footer">
-
+            <div class="footerText"> Погода в мире предоставлена исключительно
+                для личного некоммерческого использования.
+                Прогноз погоды в городах мира подготовлен НПЦ «Мэп Мейкер».
+                © Gismeteo</div>
         </footer>
     </div>
 <script>
@@ -47,9 +50,22 @@
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=f36aa04eb8ff2f57e6c9ed1422a6ac89`)
             .then(response => response.json())
             .then(json =>{
-                temp.innerText = Math.round(json.main.temp -273.15),
-                  humidity.innerText = json.main.humidity,
-                    wind.innerText = Math.round(json.wind.speed)
+                temp.innerText = 'Температура: '+ Math.round(json.main.temp -273.15) + ' °C',
+                  humidity.innerText = 'Влажность: ' + json.main.humidity + '%',
+                    wind.innerText = 'Скорость ветра: ' + Math.round(json.wind.speed) + ' km/h'
+                    console.log(json.weather[0].main)
+                const weatherMain =  json.weather[0].main;
+                console.log(weatherMain)
+                if( weatherMain == 'Clouds') {
+                    document.body.style.backgroundImage = 'url("./images/clouds.gif")';
+                }
+
+                    if( weatherMain == 'Rain') {
+                        document.body.style.backgroundImage = 'url("./images/rain.gif")';
+                    }
+                    if( weatherMain == 'Clear') {
+                        document.body.style.backgroundImage = 'url("./images/sun.gif")';
+                    }
                 }
                 )
     }
